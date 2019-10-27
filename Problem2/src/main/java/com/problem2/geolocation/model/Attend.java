@@ -1,5 +1,6 @@
 package com.problem2.geolocation.model;
 
+import com.problem2.geolocation.NullListException;
 import com.problem2.geolocation.common.Util;
 
 import java.util.ArrayList;
@@ -34,7 +35,10 @@ public class Attend {
      * @param classroomList the classrooms's list.
      * @return students's list found into classroom.
      */
-    public List<Student> getStudentInClass(List<Student> studentList, List<Classroom> classroomList) {
+    public List<Student> getStudentInClass(List<Student> studentList, List<Classroom> classroomList) throws NullListException {
+        if (studentList == null || classroomList == null) {
+            throw new NullListException("The student or classrrom list is null");
+        }
         studentFoundList = new ArrayList<>();
         for (Student student: studentList) {
             for (Classroom classroom : classroomList) {
