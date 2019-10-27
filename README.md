@@ -24,6 +24,6 @@ Endpoints:
 *   Class:
     *   http://localhost:9090/api/v1/student   -    GET ALL and POST methods
     *   http://localhost:9090/api/v1/student/{id} - GET BY ID, DELETE, UPDATE methods
-    *   http://localhost:9090/api/v1/student/filter?code=<some code>&title=<some title> - GET method to search using query params
+    *   http://localhost:9090/api/v1/student/filter?fisrtName=<some firstName>&lastName=<some lastName> - GET method to search using query params
     *   http://localhost:9090/api/v1/student/classes/{class_id} - list all students by class
 
