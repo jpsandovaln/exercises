@@ -1,5 +1,6 @@
 package com.problem1.webservice.controller;
 
+import com.problem1.webservice.common.constant.MessageConstant;
 import com.problem1.webservice.exception.ParameterInvalidException;
 import com.problem1.webservice.model.entity.Student;
 import com.problem1.webservice.model.repository.StudentRepository;
@@ -69,7 +70,8 @@ public class StudentController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        Student student = studentRepo.findById(id).orElseThrow(() -> new RuntimeException("no found"));
+        Student student = studentRepo.findById(id).orElseThrow(() ->
+                new RuntimeException(MessageConstant.DELETE_ERROR_MSG));
         studentRepo.delete(student);
         return ResponseEntity.ok().build();
     }
@@ -83,7 +85,8 @@ public class StudentController {
     @PutMapping("{id}")
     public Student updateStudent(@PathVariable(value = "id") Long id,
                                  @RequestBody Student newStudentData) {
-        Student student = studentRepo.findById(id).orElseThrow(() -> new RuntimeException("no found"));
+        Student student = studentRepo.findById(id).orElseThrow(() ->
+                new RuntimeException(MessageConstant.UPDATE_ERROR_MSG));
         student.setFirstName(newStudentData.getFirstName());
         student.setLastName(newStudentData.getLastName());
         student.setClasses(newStudentData.getClasses());
@@ -108,7 +111,8 @@ public class StudentController {
      * @return a student's list.
      */
     @GetMapping("/filter")
-    public  List<StudentResponse> getStudentByQueryParams(@RequestParam(required = true) String firstName, @RequestParam(required = true) String lastName) {
+    public  List<StudentResponse> getStudentByQueryParams(@RequestParam(required = true) String firstName,
+                                                          @RequestParam(required = true) String lastName) {
         return studentRepo.findByStudentNames(firstName, lastName);
     }
 }
