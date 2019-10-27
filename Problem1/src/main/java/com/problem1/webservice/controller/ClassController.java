@@ -5,6 +5,7 @@ import com.problem1.webservice.exception.ParameterInvalidException;
 import com.problem1.webservice.model.entity.Class;
 import com.problem1.webservice.model.repository.ClassRepository;
 import com.problem1.webservice.response.ClassResponse;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class ClassController {
      * Gets all Classes.
      * @return a class list
      */
+    @ApiOperation(value = "Returns a Class list.")
     @GetMapping
     public List<ClassResponse> getAllClasses() {
         return classRepo.findAllClass();
@@ -39,6 +41,7 @@ public class ClassController {
      * @param id the class's id.
      * @return a class by id.
      */
+    @ApiOperation(value = "Returns a Class by Id.")
     @GetMapping("/{id}")
     public ClassResponse geClassById(@PathVariable( value = "id") Long id,
                                      HttpServletResponse response)  throws IOException {
@@ -58,6 +61,7 @@ public class ClassController {
      * @param newClass class object from client.
      * @return the class created.
      */
+    @ApiOperation(value = "Returns the Class created.")
     @PostMapping
     public Class createClass(@RequestBody Class newClass) {
         return classRepo.save(newClass);
@@ -68,6 +72,7 @@ public class ClassController {
      * @param id the class's id.
      * @return a ok response.
      */
+    @ApiOperation(value = "Returns OK response if the Class was deleted.")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClass(@PathVariable(value = "id") Long id) {
         Class classRoom = classRepo.findById(id).orElseThrow(() ->
@@ -82,6 +87,7 @@ public class ClassController {
      * @param newClassData class object from client.
      * @return the class updated.
      */
+    @ApiOperation(value = "Returns the class updated.")
     @PutMapping("{id}")
     public Class updateClass(@PathVariable(value = "id") Long id,
                              @RequestBody Class newClassData) {
@@ -101,6 +107,7 @@ public class ClassController {
      * @param id the student's id.
      * @return a class's list by student.
      */
+    @ApiOperation(value = "Returns a class's list by student.")
     @GetMapping("/students/{id}")
     public List<ClassResponse> getAllClassesByStudentId(@PathVariable(value = "id") Long id) {
         return classRepo.findAllClassesByStudent(id);
@@ -112,6 +119,7 @@ public class ClassController {
      * @param title the class's title sent by the client.
      * @return a class's list.
      */
+    @ApiOperation(value = "Returns a class's list.")
     @GetMapping("/filter")
     public  List<ClassResponse> getClassesByQueryParams(@RequestParam(required = true) String code,
                                                         @RequestParam(required = true) String title) {
