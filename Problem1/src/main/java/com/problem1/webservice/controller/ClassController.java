@@ -1,5 +1,6 @@
 package com.problem1.webservice.controller;
 
+import com.problem1.webservice.exception.ParameterInvalidException;
 import com.problem1.webservice.model.entity.Class;
 import com.problem1.webservice.model.repository.ClassRepository;
 import com.problem1.webservice.response.ClassResponse;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -36,8 +39,16 @@ public class ClassController {
      * @return a class by id.
      */
     @GetMapping("/{id}")
-    public ClassResponse geClassById(@PathVariable( value = "id") Long id) {
-        return classRepo.findByClassId(id);
+    public ClassResponse geClassById(@PathVariable( value = "id") Long id, HttpServletResponse response)  throws IOException {
+        ClassResponse classResponse = classRepo.findByClassId(id);
+        try {
+            classResponse.validate();
+        } catch (ParameterInvalidException ex) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+        } catch (Exception ex) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+        }
+        return classResponse;
     }
 
     /**

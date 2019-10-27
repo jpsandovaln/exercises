@@ -1,5 +1,14 @@
 package com.problem1.webservice.response;
 
+import com.problem1.webservice.common.validation.ContextValidation;
+import com.problem1.webservice.common.validation.MinLengthValidation;
+import com.problem1.webservice.exception.ParameterInvalidException;
+import com.problem1.webservice.common.validation.IValidationStrategy;
+import com.problem1.webservice.common.validation.NullOrEmptyValidation;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class Response.
  * @author Paolo Sandoval
@@ -11,6 +20,8 @@ public class ClassResponse {
     private String code;
     private String title;
     private String description;
+
+    static final int MIN_LENGTH = 4;
 
     /**
      * Constructor
@@ -94,5 +105,18 @@ public class ClassResponse {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Validates fields.
+     * @throws ParameterInvalidException
+     */
+    public void validate() throws ParameterInvalidException {
+        List<IValidationStrategy> validationList = new ArrayList<>();
+        validationList.add(new NullOrEmptyValidation(this.code, "code"));
+        validationList.add(new NullOrEmptyValidation(this.title, "title"));
+        validationList.add(new MinLengthValidation(MIN_LENGTH, this.title, "title"));
+        ContextValidation context = new ContextValidation(validationList);
+        context.validata();
     }
 }

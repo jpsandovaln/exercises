@@ -1,5 +1,13 @@
 package com.problem1.webservice.response;
 
+import com.problem1.webservice.common.validation.ContextValidation;
+import com.problem1.webservice.common.validation.IValidationStrategy;
+import com.problem1.webservice.common.validation.NullOrEmptyValidation;
+import com.problem1.webservice.exception.ParameterInvalidException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Student Response.
  * @author Paolo Sandoval
@@ -75,5 +83,17 @@ public class StudentResponse {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**
+     * Validates fields.
+     * @throws ParameterInvalidException when the parameter is invalid.
+     */
+    public void validate() throws ParameterInvalidException {
+        List<IValidationStrategy> validationList = new ArrayList<>();
+        validationList.add(new NullOrEmptyValidation(this.firstName, "firstName"));
+        validationList.add(new NullOrEmptyValidation(this.lastName, "lastName"));
+        ContextValidation context = new ContextValidation(validationList);
+        context.validata();
     }
 }
