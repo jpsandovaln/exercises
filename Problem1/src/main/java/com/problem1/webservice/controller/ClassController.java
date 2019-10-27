@@ -1,5 +1,6 @@
 package com.problem1.webservice.controller;
 
+import com.problem1.webservice.common.constant.MessageConstant;
 import com.problem1.webservice.exception.ParameterInvalidException;
 import com.problem1.webservice.model.entity.Class;
 import com.problem1.webservice.model.repository.ClassRepository;
@@ -39,7 +40,8 @@ public class ClassController {
      * @return a class by id.
      */
     @GetMapping("/{id}")
-    public ClassResponse geClassById(@PathVariable( value = "id") Long id, HttpServletResponse response)  throws IOException {
+    public ClassResponse geClassById(@PathVariable( value = "id") Long id,
+                                     HttpServletResponse response)  throws IOException {
         ClassResponse classResponse = classRepo.findByClassId(id);
         try {
             classResponse.validate();
@@ -68,7 +70,8 @@ public class ClassController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClass(@PathVariable(value = "id") Long id) {
-        Class classRoom = classRepo.findById(id).orElseThrow(() -> new RuntimeException("no found"));
+        Class classRoom = classRepo.findById(id).orElseThrow(() ->
+                new RuntimeException(MessageConstant.DELETE_ERROR_MSG));
         classRepo.delete(classRoom);
         return ResponseEntity.ok().build();
     }
@@ -82,7 +85,8 @@ public class ClassController {
     @PutMapping("{id}")
     public Class updateClass(@PathVariable(value = "id") Long id,
                              @RequestBody Class newClassData) {
-        Class currentClass = classRepo.findById(id).orElseThrow(() -> new RuntimeException("no found"));
+        Class currentClass = classRepo.findById(id).orElseThrow(() ->
+                new RuntimeException(MessageConstant.UPDATE_ERROR_MSG));
         currentClass.setCode(newClassData.getCode());
         currentClass.setDescription(newClassData.getDescription());
         currentClass.setTitle(newClassData.getTitle());
@@ -109,7 +113,8 @@ public class ClassController {
      * @return a class's list.
      */
     @GetMapping("/filter")
-    public  List<ClassResponse> getClassesByQueryParams(@RequestParam(required = true) String code, @RequestParam(required = true) String title) {
+    public  List<ClassResponse> getClassesByQueryParams(@RequestParam(required = true) String code,
+                                                        @RequestParam(required = true) String title) {
         return classRepo.findByClassesFilter(code, title);
     }
 }
