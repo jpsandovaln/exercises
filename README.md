@@ -27,3 +27,5 @@ Endpoints:
     *   http://localhost:9090/api/v1/student/filter?fisrtName=<some firstName>&lastName=<some lastName> - GET method to search using query params
     *   http://localhost:9090/api/v1/student/classes/{class_id} - list all students by class
 
+Swagger URL:
+*   http://localhost:9090/api/v1/swagger-ui.html

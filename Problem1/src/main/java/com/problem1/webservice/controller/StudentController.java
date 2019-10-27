@@ -5,6 +5,7 @@ import com.problem1.webservice.exception.ParameterInvalidException;
 import com.problem1.webservice.model.entity.Student;
 import com.problem1.webservice.model.repository.StudentRepository;
 import com.problem1.webservice.response.StudentResponse;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class StudentController {
      * Gets all students.
      * @return a student list
      */
+    @ApiOperation(value = "Returns a Student list.")
     @GetMapping
     public List<StudentResponse> getAllStudents() {
         return studentRepo.findAllStudent();
@@ -39,6 +41,7 @@ public class StudentController {
      * @param id the student's id.
      * @return a student by id.
      */
+    @ApiOperation(value = "Returns a student by id.")
     @GetMapping("/{id}")
     public StudentResponse geStudentById(@PathVariable( value = "id") Long id,
                                          HttpServletResponse response)  throws IOException {
@@ -58,6 +61,7 @@ public class StudentController {
      * @param student student object from client.
      * @return the student created.
      */
+    @ApiOperation(value = "Returns the student created.")
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentRepo.save(student);
@@ -68,6 +72,7 @@ public class StudentController {
      * @param id the student's id.
      * @return a ok response.
      */
+    @ApiOperation(value = "Returns OK response if the Student was deleted.")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         Student student = studentRepo.findById(id).orElseThrow(() ->
@@ -82,6 +87,7 @@ public class StudentController {
      * @param newStudentData student object from client.
      * @return the student updated.
      */
+    @ApiOperation(value = "Returns the student updated.")
     @PutMapping("{id}")
     public Student updateStudent(@PathVariable(value = "id") Long id,
                                  @RequestBody Student newStudentData) {
@@ -99,6 +105,7 @@ public class StudentController {
      * @param id the class's id.
      * @return a students's list on the class.
      */
+    @ApiOperation(value = "Returns students's list on the class.")
     @GetMapping("/classes/{id}")
     public List<StudentResponse> getAllClassesByStudentId(@PathVariable(value = "id") Long id) {
         return studentRepo.findAllStudentsByClass(id);
