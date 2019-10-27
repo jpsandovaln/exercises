@@ -81,10 +81,10 @@ public class Student {
 
     /**
      * Sets the student's first name.
-     * @param firsName the student's first name.
+     * @param firstName the student's first name.
      */
-    public void setFirstName(String firsName) {
-        this.firstName = firsName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     /**
